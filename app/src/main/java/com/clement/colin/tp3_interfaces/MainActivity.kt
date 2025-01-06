@@ -1,16 +1,19 @@
 package com.clement.colin.tp3_interfaces
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.Slider
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var resultTextView1: TextView
-    private lateinit var resultTextView2: TextView
+    private lateinit var diceImage1: ImageView
+    private lateinit var diceImage2: ImageView
     private lateinit var messageTextView: TextView
     private lateinit var targetNumberSlider: Slider
 
@@ -18,58 +21,46 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize views
-        resultTextView1 = findViewById(R.id.resultTextView1)
-        resultTextView2 = findViewById(R.id.resultTextView2)
+        diceImage1 = findViewById(R.id.diceImage1)
+        diceImage2 = findViewById(R.id.diceImage2)
         messageTextView = findViewById(R.id.messageTextView)
         targetNumberSlider = findViewById(R.id.targetNumberSlider)
 
-        // Set up automatic rolling when slider value changes
         setupAutoRoll()
     }
 
     private fun setupAutoRoll() {
-        targetNumberSlider.addOnChangeListener { _, value, fromUser ->
+        targetNumberSlider.addOnChangeListener { slider, value, fromUser ->
+            slider.contentDescription = "Nombre sélectionné : ${value.toInt()}"
             if (fromUser) {
                 rollDice(value.toInt())
             }
         }
     }
 
-    private fun animateWinningDice() {
-        val bounceDistance = -50f  // bounce up distance in pixels
-
-        val animator1 = ObjectAnimator.ofFloat(resultTextView1, "translationY", 0f, bounceDistance, 0f)
-        val animator2 = ObjectAnimator.ofFloat(resultTextView2, "translationY", 0f, bounceDistance, 0f)
-
-        animator1.apply {
-            duration = 700
-            interpolator = AccelerateDecelerateInterpolator()
-            start()
-        }
-
-        animator2.apply {
-            duration = 700
-            interpolator = AccelerateDecelerateInterpolator()
-            start()
+    private fun getDrawableResource(number: Int): Int {
+        return when (number) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
         }
     }
 
     private fun rollDice(targetNumber: Int) {
-        // Create new Dice object with 6 sides and roll both dice
         val dice = Dice(6)
         val diceRoll1 = dice.roll()
         val diceRoll2 = dice.roll()
         val sum = diceRoll1 + diceRoll2
 
-        // Update the screen with both dice rolls
-        resultTextView1.text = diceRoll1.toString()
-        resultTextView2.text = diceRoll2.toString()
+        // Mettre à jour les images des dés
+        diceImage1.setImageResource(getDrawableResource(diceRoll1))
+        diceImage2.setImageResource(getDrawableResource(diceRoll2))
 
-        // Check if sum equals target number and display appropriate message
         if (sum == targetNumber) {
             messageTextView.text = "Félicitations! La somme ($sum) correspond à votre nombre!"
-            animateWinningDice()
         } else {
             messageTextView.text = "La somme est $sum. Essayez encore!"
         }

@@ -32,23 +32,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5">
 
-        <TextView
-            android:id="@+id/resultTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/diceImage1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/_0"
-            android:textSize="36sp" />
+            android:contentDescription="Premier dé"
+            android:src="@drawable/dice_1" />
 
-        <TextView
-            android:id="@+id/resultTextView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/diceImage2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/_0"
-            android:textSize="36sp" />
+            android:contentDescription="Second dé"
+            android:src="@drawable/dice_1" />
     </LinearLayout>
 
     <Button
