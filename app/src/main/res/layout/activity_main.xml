@@ -10,46 +10,47 @@
         android:id="@+id/targetNumberSlider"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="256dp"
         android:contentDescription="@string/choisissez_un_nombre_entre_2_et_12"
         android:stepSize="1"
         android:valueFrom="2"
         android:valueTo="12"
         app:labelBehavior="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/targetNumberSlider"
+        app:layout_constraintEnd_toEndOf="@+id/targetNumberSlider"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/targetNumberSlider"
+        app:layout_constraintTop_toBottomOf="@+id/messageTextView">
 
         <ImageView
             android:id="@+id/diceImage1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:contentDescription="Premier dé"
-            android:src="@drawable/dice_1" />
+            android:src="@drawable/dice_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/diceImage2"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/diceImage2"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:contentDescription="Second dé"
-            android:src="@drawable/dice_1" />
-    </LinearLayout>
+            android:src="@drawable/dice_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/diceImage1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/button"
@@ -68,9 +69,9 @@
         android:id="@+id/messageTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
         android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/targetNumberSlider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

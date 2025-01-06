@@ -49,6 +49,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun animateWinningDice() {
+        // Créer les animations de rebond
+        val bounceAnimation1 = createBounceAnimation(diceImage1)
+        val bounceAnimation2 = createBounceAnimation(diceImage2)
+
+        // Créer l'animation de rotation
+        val rotateAnimation1 = createRotateAnimation(diceImage1)
+        val rotateAnimation2 = createRotateAnimation(diceImage2)
+
+        // Jouer les animations ensemble
+        AnimatorSet().apply {
+            playTogether(bounceAnimation1, bounceAnimation2, rotateAnimation1, rotateAnimation2)
+            start()
+        }
+    }
+
+    private fun createBounceAnimation(view: ImageView): AnimatorSet {
+        val bounceUp = ObjectAnimator.ofFloat(view, "translationY", 0f, -100f)
+        val bounceDown = ObjectAnimator.ofFloat(view, "translationY", -100f, 0f)
+
+        return AnimatorSet().apply {
+            playSequentially(bounceUp, bounceDown)
+            duration = 500
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+    }
+
+    private fun createRotateAnimation(view: ImageView): ObjectAnimator {
+        return ObjectAnimator.ofFloat(view, "rotation", 0f, 360f).apply {
+            duration = 1000
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+    }
+
     private fun rollDice(targetNumber: Int) {
         val dice = Dice(6)
         val diceRoll1 = dice.roll()
@@ -61,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         if (sum == targetNumber) {
             messageTextView.text = "Félicitations! La somme ($sum) correspond à votre nombre!"
+            animateWinningDice()
         } else {
             messageTextView.text = "La somme est $sum. Essayez encore!"
         }
