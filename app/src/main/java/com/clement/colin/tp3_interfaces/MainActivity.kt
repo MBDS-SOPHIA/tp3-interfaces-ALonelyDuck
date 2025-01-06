@@ -9,6 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.Slider
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.xml.KonfettiView
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var diceImage2: ImageView
     private lateinit var messageTextView: TextView
     private lateinit var targetNumberSlider: Slider
+    private lateinit var konfettiView: KonfettiView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         diceImage2 = findViewById(R.id.diceImage2)
         messageTextView = findViewById(R.id.messageTextView)
         targetNumberSlider = findViewById(R.id.targetNumberSlider)
+
+        konfettiView = findViewById(R.id.konfettiView)
 
         setupAutoRoll()
     }
@@ -83,6 +90,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showConfetti() {
+        val party = Party(
+            emitter = Emitter(duration = 1, TimeUnit.SECONDS).perSecond(30)
+        )
+        konfettiView.start(party)
+    }
+
     private fun rollDice(targetNumber: Int) {
         val dice = Dice(6)
         val diceRoll1 = dice.roll()
@@ -96,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         if (sum == targetNumber) {
             messageTextView.text = "Félicitations! La somme ($sum) correspond à votre nombre!"
             animateWinningDice()
+            showConfetti()
         } else {
             messageTextView.text = "La somme est $sum. Essayez encore!"
         }
