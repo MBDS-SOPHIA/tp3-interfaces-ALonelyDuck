@@ -3,4 +3,5 @@
     <string name="roll">ROLL</string>
     <string name="_0">0</string>
     <string name="_1">0</string>
+    <string name="choisissez_un_nombre_entre_2_et_12">Choisissez un nombre entre 2 et 12</string>
 </resources>
