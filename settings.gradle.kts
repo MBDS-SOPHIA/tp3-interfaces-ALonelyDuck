@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TP3_Interface"
+rootProject.name = "TP3_Interfaces"
 include(":app")
  
